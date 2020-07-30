@@ -4,7 +4,7 @@
         <div ref="checkerBoard" class="checker-board">
             <template v-for="(row,rowIndex) in map">
                 <template v-for="(col,colIndex) in row">
-                    <Cell @cellClick="cellClick(rowIndex,colIndex,$event)" :status="status"/>
+                    <Cell @cellClick="cellClick(rowIndex,colIndex)" :status="status"/>
                 </template>
             </template>
         </div>
@@ -37,15 +37,11 @@
                     [null, null, null],
                     [null, null, null]]
             },
-            //判断每个格子棋子
-            getStatus() {
+
+            cellClick(rowIndex, colIndex) {
                 this.status= this.totalCount % 2 ? 'X' : 'O'
-                console.log(this)
-            },
-            cellClick(rowIndex, colIndex, status) {
-                this.getStatus()
                 this.totalCount++
-                this.map[rowIndex][colIndex] = status
+                this.map[rowIndex][colIndex] = this.status
                 for (let row in this.map) {
                     if (this.map[row][0] !== null && this.map[row][0] === this.map[row][1] && this.map[row][1] === this.map[row][2]) {
                         return alertResult(this.map[row][0])

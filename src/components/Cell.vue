@@ -1,17 +1,24 @@
 <template>
-    <div ref="cell" class="cell" @click="cellClick()">{{status}}</div>
+    <div ref="cell" class="cell" @click="cellClick()" :style="{color:itemStatus==='X'? 'red':''}">{{itemStatus}}</div>
 </template>
 
 <script>
     export default {
         name: "Cell",
         props: ['status'],
+        data() {
+            return {
+                itemStatus: ""
+            }
+        },
         methods: {
             cellClick() {
-                if (this.status ==='X') {
-                        this.$refs.cell.style.setProperty('color', 'red')
+                if (this.itemStatus === "") {
+                    this.$emit('cellClick')
+                    this.$nextTick(()=>{
+                        this.itemStatus = this.status
+                    })
                 }
-                this.$emit('cellClick')
             }
         }
     }
