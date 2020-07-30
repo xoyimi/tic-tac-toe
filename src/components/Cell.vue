@@ -1,20 +1,17 @@
 <template>
-    <div class="cell" @click="cellClick">{{status}}</div>
+    <div ref="cell" class="cell" @click="cellClick()">{{status}}</div>
 </template>
 
 <script>
     export default {
         name: "Cell",
-        data() {
-            return {
-                status: ''
-            }
-        },
-        props: ['totalCount'],
+        props: ['status'],
         methods: {
             cellClick() {
-                this.status === '' ? this.$emit('cellClick') : ''
-                this.status = this.totalCount % 2 ? 'X' : 'O'
+                if (this.status ==='X') {
+                        this.$refs.cell.style.setProperty('color', 'red')
+                }
+                this.$emit('cellClick')
             }
         }
     }
@@ -22,12 +19,14 @@
 
 <style scoped>
     .cell {
-        flex-basis: calc(350px / 3);
-        height: calc(350px / 3);
-        border: 1px solid pink;
+        flex-basis: 33.33%;
+        height: 33.33%;
         display: flex;
         justify-content: center;
         align-items: center;
-        font-size: .02rem;
+        font-size: calc(40px + .5vw);
+        outline: purple 2px solid;
+        outline-offset: -1px;
     }
+
 </style>
