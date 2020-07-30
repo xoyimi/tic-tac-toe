@@ -32,37 +32,40 @@
         },
         methods: {
             initGame() {
+                this.status=''
                 this.totalCount = 0
                 this.map = [[null, null, null],
                     [null, null, null],
                     [null, null, null]]
             },
-
+            //通报结果
+            alertResult(winner) {
+               setTimeout(() => {
+               let isContinue=  confirm(`恭喜"${winner}"获得胜利,是否再开一局？`)
+                   if (isContinue){
+                       this.initGame()
+                   }
+                })
+            },
             cellClick(rowIndex, colIndex) {
-                this.status= this.totalCount % 2 ? 'X' : 'O'
+                this.status = this.totalCount % 2 ? 'X' : 'O'
                 this.totalCount++
                 this.map[rowIndex][colIndex] = this.status
                 for (let row in this.map) {
                     if (this.map[row][0] !== null && this.map[row][0] === this.map[row][1] && this.map[row][1] === this.map[row][2]) {
-                        return alertResult(this.map[row][0])
+                        return this.alertResult(this.map[row][0])
                     }
                     for (let col in this.map[row]) {
                         if (this.map[0][col] !== null && this.map[0][col] === this.map[1][col] && this.map[1][col] === this.map[2][col]) {
-                            return alertResult(this.map[0][col])
+                            return  this.alertResult(this.map[0][col])
                         } else if (this.map[0][0] !== null && this.map[0][0] === this.map[1][1] && this.map[1][1] === this.map[2][2]) {
-                            return alertResult(this.map[1][1])
+                            return  this.alertResult(this.map[1][1])
                         } else if (this.map[0][2] !== null && this.map[0][2] === this.map[1][1] && this.map[1][1] === this.map[2][0]) {
-                            return alertResult(this.map[1][1])
+                            return  this.alertResult(this.map[1][1])
                         }
                     }
                 }
 
-                //通报结果
-                function alertResult(winner) {
-                    setTimeout(() => {
-                        alert(`winner is "${winner}"`)
-                    })
-                }
 
             }
         },
